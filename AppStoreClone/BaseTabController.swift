@@ -12,41 +12,35 @@ class BaseTabController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UITabBar.appearance().backgroundColor = .white
-      
+        let tabBarAppearance = UITabBarAppearance()
+        UITabBar.appearance().standardAppearance = tabBarAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+        UITabBar.appearance().barTintColor = .white
+        UITabBar.appearance().isTranslucent = true
         
-
-        let redViewController = UIViewController()
-        redViewController.view.backgroundColor = .red
-        redViewController.tabBarItem.title = "Red"
-        let redNavController = UINavigationController(rootViewController: redViewController)
-        redNavController.tabBarItem.title = "Red"
         
-        let blueViewController = UIViewController()
-        blueViewController.view.backgroundColor = .blue
-        blueViewController.tabBarItem.title = "Blue"
-        let blueNavController = UINavigationController(rootViewController: blueViewController)
-        blueNavController.tabBarItem.title = "Blue"
-
 
         
         viewControllers = [
-            redNavController,
-            blueNavController
+            createTabViewController(viewController: SearchViewController(), title: "Search", imageName: "search"),
+            createTabViewController(viewController: UIViewController(), title: "Today", imageName: "today_icon"),
+            createTabViewController(viewController: UIViewController(), title: "Apps", imageName: "apps"),
         ]
 
-        // Do any additional setup after loading the view.
+       
+        
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    fileprivate func createTabViewController(viewController:UIViewController, title : String, imageName: String) -> UIViewController {
+        let navViewController = UINavigationController(rootViewController: viewController)
+        viewController.navigationItem.title = title
+        viewController.view.backgroundColor = .white
+        viewController.tabBarItem.title = title
+        viewController.tabBarItem.image = UIImage(named: imageName)
+        navViewController.navigationBar.prefersLargeTitles = true
+        return navViewController
     }
-    */
+    
 
 }
